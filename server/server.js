@@ -8,7 +8,6 @@ const app = express();
 require('dotenv').config();
 
 mongoose.set('strictQuery', false);
-console.log(process.env.MONGO_URL);
 mongoose.connect(process.env.MONGO_URL).then(() => {
   console.log('DB Connection is successful')
 }).catch((error) => {

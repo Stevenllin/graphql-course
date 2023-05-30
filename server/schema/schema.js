@@ -7,6 +7,8 @@ const {
   GraphQLList
 } = graphql;
 const _ = require('lodash');
+const Book = require('../models/book');
+const Author = require('../models/author');
 
 let books = [
   { name: 'Name 1', genre: 'Genre 1', id: '1', authorId: '1' },
