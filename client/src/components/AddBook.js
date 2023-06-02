@@ -25,6 +25,7 @@ const getOptions = (loading, error, data) => {
 
 const AddBook = () => {
   const { loading, error, data } = useQuery(GET_AUTHORS_QUERY);
+  const [addBook] = useMutation(ADD_BOOK_MUTATION);
   const [formValue, setFormValue] = useState({
    name: '',
    genre: '',
@@ -50,6 +51,15 @@ const AddBook = () => {
     e.preventDefault()
 
     console.log('formValue', formValue)
+
+    addBook({
+      variables: {
+        name: formValue.name,
+        genre: formValue.genre,
+        authorId: formValue.author
+      },
+      refetchQueries: [{ query: GET_BOOKS_QUERY }]
+    })
   }
 
   return (
