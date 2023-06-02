@@ -49,9 +49,6 @@ const AddBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log('formValue', formValue)
-
     addBook({
       variables: {
         name: formValue.name,
