@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   GET_AUTHORS_QUERY,
   ADD_BOOK_MUTATION,
@@ -25,34 +25,54 @@ const getOptions = (loading, error, data) => {
 
 const AddBook = () => {
   const { loading, error, data } = useQuery(GET_AUTHORS_QUERY);
+  const [formValue, setFormValue] = useState({
+   name: '',
+   genre: '',
+   author: '' 
+  })
 
   const options = useMemo(() => getOptions(loading, error, data), [
     loading,
     error,
     data
- ]);
+  ]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormValue((prevState) => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    console.log('formValue', formValue)
+  }
 
   return (
-    <form id="add-book">
-       <div className="field">
-          <label>Book name:</label>
-          <input type="text" />
-       </div>
+    <form id="add-book" onSubmit={(e) => handleSubmit(e)}>
+      <div className="field">
+        <label>Book name:</label>
+        <input name="name" type="text" onChange={(e) => handleChange(e)} />
+      </div>
 
-       <div className="field">
-          <label>Genre:</label>
-          <input type="text"/>
-       </div>
+      <div className="field">
+        <label>Genre:</label>
+        <input name="genre" type="text" onChange={(e) => handleChange(e)} />
+      </div>
 
-       <div className="field">
-          <label>Author:</label>
-          <select>
-             <option>Select Author</option>
-             {options}
-          </select>
-       </div>
+      <div className="field">
+        <label>Author:</label>
+        <select name="author" onChange={(e) => handleChange(e)}>
+          <option>Select Author</option>
+          {options}
+        </select>
+      </div>
 
-       <button>+</button>
+      <button>+</button>
     </form>
  );
 }
